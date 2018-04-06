@@ -1,0 +1,97 @@
+ 
+set security address-book global address DLF-DOC-DF-PRIVATE 172.16.100.137/32
+set security nat destination pool DLF-DOC-DF-PRIVATE address 172.16.100.137/32
+set security nat destination rule-set DLF-UNTRUST-NAT rule DLF-DOC-DF match source-address 0.0.0.0/0
+set security nat destination rule-set DLF-UNTRUST-NAT rule DLF-DOC-DF match destination-address 115.111.233.117/32
+set security nat destination rule-set DLF-UNTRUST-NAT rule DLF-DOC-DF then destination-nat pool DLF-DOC-DF-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy DLF-DOC-DF match source-address any
+set security policies from-zone UNTRUST to-zone TRUST policy DLF-DOC-DF match destination-address DLF-DOC-DF-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy DLF-DOC-DF match application junos-http
+set security policies from-zone UNTRUST to-zone TRUST policy DLF-DOC-DF match application junos-https
+set security policies from-zone UNTRUST to-zone TRUST policy DLF-DOC-DF then permit
+
+set security address-book global address BULWARK-PUBLIC 115.111.233.82/32
+set security address-book global address BULWARK-PRIVATE 172.16.103.214/32
+set security address-book global address-set BULWARK-ALLOWED-IPS address ITPL-AIRTEL
+set security address-book global address-set BULWARK-ALLOWED-IPS address ITPL-FW-RIL
+set security address-book global address-set BULWARK-ALLOWED-IPS address JAKARTA-OFC-IP
+set security nat destination pool BULWARK-PRIVATE address 172.16.103.214/32
+set security nat destination rule-set DLF-UNTRUST-NAT rule BULWARK match source-address-name BULWARK-ALLOWED-IPS
+set security nat destination rule-set DLF-UNTRUST-NAT rule BULWARK match destination-address 115.111.233.82/32
+set security nat destination rule-set DLF-UNTRUST-NAT rule BULWARK then destination-nat pool BULWARK-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy BULWARK match source-address BULWARK-ALLOWED-IPS
+set security policies from-zone UNTRUST to-zone TRUST policy BULWARK match destination-address BULWARK-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy BULWARK match application junos-http
+set security policies from-zone UNTRUST to-zone TRUST policy BULWARK match application junos-https
+set security policies from-zone UNTRUST to-zone TRUST policy BULWARK then permit
+
+set security address-book global address CREDITSUISSE-CRM-PRIVATE 172.16.100.3
+set security nat destination pool CREDITSUISSE-CRM-PRIVATE address 172.16.100.3
+set security nat destination pool CREDITSUISSE-CRM-PRIVATE address port 8100
+set security nat destination rule-set DLF-UNTRUST-NAT rule CREDITSUISSE-CRM match source-address-name any
+set security nat destination rule-set DLF-UNTRUST-NAT rule CREDITSUISSE-CRM match destination-address 115.111.233.82/32
+set security nat destination rule-set DLF-UNTRUST-NAT rule CREDITSUISSE-CRM then destination-nat pool CREDITSUISSE-CRM-PRIVATE
+set security nat destination rule-set DLF-UNTRUST-NAT rule CREDITSUISSE-CRM match destination-port 8081
+set security policies from-zone UNTRUST to-zone TRUST policy CREDITSUISSE-CRM match source-address any
+set security policies from-zone UNTRUST to-zone TRUST policy CREDITSUISSE-CRM match destination-address CREDITSUISSE-CRM-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy CREDITSUISSE-CRM match application http_8100
+set security policies from-zone UNTRUST to-zone TRUST policy CREDITSUISSE-CRM then permit
+set applications application http_8100 protocol tcp
+set applications application http_8100 destination-port 8100
+
+set security address-book global address WFS-PRIVATE 10.100.10.228/32
+set security nat destination pool DLF-WFS-DF-PRIVATE address 10.100.10.228/32
+set security nat destination pool DLF-WFS-DF-PRIVATE address port 80
+set security nat destination rule-set DLF-UNTRUST-NAT rule WFS match source-address 0.0.0.0/0
+set security nat destination rule-set DLF-UNTRUST-NAT rule WFS match destination-address 115.111.233.88/32
+set security nat destination rule-set DLF-UNTRUST-NAT rule WFS match destination-port 80
+set security nat destination rule-set DLF-UNTRUST-NAT rule WFS then destination-nat pool DLF-WFS-DF-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy WFS match source-address any
+set security policies from-zone UNTRUST to-zone TRUST policy WFS match destination-address WFS-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy WFS match application junos-http
+set security policies from-zone UNTRUST to-zone TRUST policy WFS then permit
+
+set security address-book global address LOREAL-WFS-PRIVATE 10.100.10.201
+set security nat destination pool LOREAL-WFS-PRIVATE address 10.100.10.201
+set security nat destination rule-set DLF-UNTRUST-NAT rule LOREAL-WFS match source-address any
+set security nat destination rule-set DLF-UNTRUST-NAT rule LOREAL-WFS match destination-address 115.111.233.89/32
+set security nat destination rule-set DLF-UNTRUST-NAT rule LOREAL-WFS match destination-port [80 8080]
+set security nat destination rule-set DLF-UNTRUST-NAT rule LOREAL-WFS then destination-nat pool LOREAL-WFS-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy LOREAL-WFS match source-address any
+set security policies from-zone UNTRUST to-zone TRUST policy LOREAL-WFS match destination-address LOREAL-WFS-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy LOREAL-WFS match application [junos-http tomcat_8080] 
+set security policies from-zone UNTRUST to-zone TRUST policy LOREAL-WFS then permit
+set applications application tomcat_8080 protocol tcp
+set applications application tomcat_8080 destination-port 8080
+
+set security nat proxy-arp interface reth0.0 address 115.111.233.89/32
+
+
+Local IP: 10.100.204.17
+Project Access port: 8080
+Project duration: 2 weeks
+DNS: 10533-panasonicqa.photoninfotech.com
+Public IP: 115.111.233.80
+
+PANASONICQA
+set security address-book global address PANASONIC-QA-PRIVATE 10.100.204.17
+set security nat destination pool PANASONIC-QA-PRIVATE address 10.100.204.17
+set security nat destination rule-set DLF-UNTRUST-NAT rule PANASONIC-QA match source-address any
+set security nat destination rule-set DLF-UNTRUST-NAT rule PANASONIC-QA match destination-address 115.111.233.80/32
+set security nat destination rule-set DLF-UNTRUST-NAT rule PANASONIC-QA match destination-port 8080
+set security nat destination rule-set DLF-UNTRUST-NAT rule PANASONIC-QA then destination-nat pool PANASONIC-QA-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy PANASONIC-QA match source-address any
+set security policies from-zone UNTRUST to-zone TRUST policy PANASONIC-QA match destination-address PANASONIC-QA-PRIVATE
+set security policies from-zone UNTRUST to-zone TRUST policy PANASONIC-QA match application tomcat_8080  
+set security policies from-zone UNTRUST to-zone TRUST policy PANASONIC-QA then permit
+
+set security nat proxy-arp interface reth0.0 address 115.111.233.80/32
+
+
+
+
+
+
+
+
+
