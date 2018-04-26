@@ -1,0 +1,33 @@
+MHS-LAN 10.100.215.0/26
+MHS Peer IP: 204.193.70.13
+MHS-Server 204.193.70.0/24
+Photon Peer IP: 115.111.233.67
+Photon Public NAT IP: 115.111.233.73
+
+Pinging smartrx-dev-elb.magellansmartrxdev.com [34.228.154.68] with 32 bytes of data:
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+ 
+Pinging smartrx-qa-elb.magellansmartrxtest.com [52.44.137.30] with 32 bytes of data:
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+
+
+34.228.154.68	smartrx-dev-elb.magellansmartrxdev.com 
+52.44.137.30 	smartrx-qa-elb.magellansmartrxtest.com 
+
+smartrx-dev-elb.magellansmartrxdev.com
+smartrx-qa-elb.magellansmartrxtest.com
+
+C:\>ping smartrx-dev-elb.magellansmartrxdev.com -t
+
+Pinging smartrx-dev-elb.magellansmartrxdev.com [52.45.139.168] with 32 bytes of data:
+
+C:\>ping smartrx-qa-elb.magellansmartrxtest.com -t
+
+Pinging smartrx-qa-elb.magellansmartrxtest.com [107.23.149.33] with 32 bytes of data:
+Control-C
