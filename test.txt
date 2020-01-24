@@ -1,0 +1,11 @@
+//Create a directory
+mkdir junoslogs-2019.10.28
+ 
+//Move a file from existing created directory into single file.
+mv -crNsGROQnq89_1CohTihA junoslogs-2019.10.28/
+mv wqm4e2gJSRqDAeUq-HLQCA junoslogs-2019.10.28/
+mv 5tXcF2j1Ss-zp2p8hzcnkQ junoslogs-2019.10.28/
+ 
+//Compress a directory then backup will take via Winscp
+tar -czvf junoslogs-2019.10.28.tar.gz junoslogs-2019.10.28
+ 
